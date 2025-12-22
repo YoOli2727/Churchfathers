@@ -108,12 +108,14 @@
         .quote-text { font-style: italic; color: var(--text-main); margin-bottom: 1rem; font-size: 1.05rem; }
         .quote-source { font-size: 0.75rem; text-align: right; color: var(--text-sub); border-top: 1px solid var(--shadow); padding-top: 8px; font-weight: bold; }
 
-        .share-btn {
-            position: absolute; top: 1rem; right: 1rem;
-            background: none; border: none; color: var(--gold);
+        .share-btn, .pdf-btn {
+            position: absolute; top: 1rem;
+            background: none; border: none;
             font-size: 1.1rem; cursor: pointer; opacity: 0.6;
         }
-        .share-btn:hover { opacity: 1; }
+        .share-btn { right: 1rem; color: var(--gold); }
+        .pdf-btn { right: 3rem; color: var(--crimson); }
+        .share-btn:hover, .pdf-btn:hover { opacity: 1; }
 
         /* --- 5. SCROLLABLE NAVIGATION --- */
         nav {
@@ -212,6 +214,7 @@
         <section id="view-eucharist" class="view-section">
             <h2 class="topic-title">The Eucharist</h2>
             <div class="quote-card">
+                <button class="pdf-btn" onclick="openPDF(1)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Ignatius_Antioch.jpg/220px-Ignatius_Antioch.jpg" class="saint-avatar">
@@ -221,6 +224,7 @@
                 <div class="quote-source">Letter to the Romans, 7:3</div>
             </div>
             <div class="quote-card">
+                <button class="pdf-btn" onclick="openPDF(2)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/St_John_Chrysostom_icon_full_body.jpg/178px-St_John_Chrysostom_icon_full_body.jpg" class="saint-avatar">
@@ -230,6 +234,7 @@
                 <div class="quote-source">Homily 82 on Matthew</div>
             </div>
             <div class="quote-card">
+                <button class="pdf-btn" onclick="openPDF(3)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Carlo_Crivelli_005.jpg/235px-Carlo_Crivelli_005.jpg" class="saint-avatar">
@@ -239,7 +244,8 @@
                 <div class="quote-source">Liturgy for Corpus Christi</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(4)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Saint_Justin_Martyr_-_Theophanes_the_Cretan.jpg/220px-Saint_Justin_Martyr_-_Theophanes_the_Cretan.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Justin Martyr</h3><span>(c. 155 AD)</span></div>
@@ -252,7 +258,8 @@
         <section id="view-trinity" class="view-section">
             <h2 class="topic-title">The Holy Trinity</h2>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(5)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Gregorius_Theologus.jpg/220px-Gregorius_Theologus.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Gregory Nazianzen</h3><span>(c. 380 AD)</span></div>
@@ -261,7 +268,8 @@
                 <div class="quote-source">Oration 40</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(6)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sandro_Botticelli_-_St_Augustine_in_His_Study_-_WGA02748.jpg/250px-Sandro_Botticelli_-_St_Augustine_in_His_Study_-_WGA02748.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Augustine of Hippo</h3><span>(c. 415 AD)</span></div>
@@ -270,7 +278,8 @@
                 <div class="quote-source">De Trinitate, Book VIII</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(7)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Athanasius_s.jpg/220px-Athanasius_s.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Athanasius</h3><span>(c. 330 AD)</span></div>
@@ -283,7 +292,8 @@
         <section id="view-mary" class="view-section">
             <h2 class="topic-title">The Theotokos</h2>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(8)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Theotokos_Vladimiskaya.jpg/220px-Theotokos_Vladimiskaya.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Cyril of Alexandria</h3><span>(c. 431 AD)</span></div>
@@ -292,7 +302,8 @@
                 <div class="quote-source">Letter 1 to the Monks of Egypt</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(9)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Saint_Irenaeus.jpg/220px-Saint_Irenaeus.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Irenaeus</h3><span>(c. 180 AD)</span></div>
@@ -301,7 +312,8 @@
                 <div class="quote-source">Against Heresies, Book III</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(10)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ephrem_the_Syrian_contemporary_icon.jpg/220px-Ephrem_the_Syrian_contemporary_icon.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Ephrem the Syrian</h3><span>(c. 370 AD)</span></div>
@@ -313,8 +325,9 @@
 
         <section id="view-authority" class="view-section">
             <h2 class="topic-title">Church Authority</h2>
-             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+            <div class="quote-card">
+                <button class="pdf-btn" onclick="openPDF(11)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Saint_Irenaeus.jpg/220px-Saint_Irenaeus.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Irenaeus</h3><span>(c. 180 AD)</span></div>
@@ -323,7 +336,8 @@
                 <div class="quote-source">Against Heresies, Book III</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(12)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Cyprianus_Carthaginensis.jpg/220px-Cyprianus_Carthaginensis.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Cyprian</h3><span>(c. 251 AD)</span></div>
@@ -332,7 +346,8 @@
                 <div class="quote-source">On the Unity of the Church</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(13)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Saint_Jerome_Caravaggio_%28Monserrat%29.jpg/220px-Saint_Jerome_Caravaggio_%28Monserrat%29.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Jerome</h3><span>(c. 376 AD)</span></div>
@@ -345,7 +360,8 @@
         <section id="view-prayer" class="view-section">
             <h2 class="topic-title">Prayer & Life</h2>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(14)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Th%C3%A9r%C3%A8se_de_Lisieux_02.jpg/220px-Th%C3%A9r%C3%A8se_de_Lisieux_02.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Thérèse of Lisieux</h3><span>(c. 1895 AD)</span></div>
@@ -354,7 +370,8 @@
                 <div class="quote-source">Autobiography</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(15)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Teresa_of_Avila_by_Peter_Paul_Rubens.jpg/220px-Teresa_of_Avila_by_Peter_Paul_Rubens.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Teresa of Ávila</h3><span>(1565 AD)</span></div>
@@ -362,8 +379,9 @@
                 <p class="quote-text">"Mental prayer in my opinion is nothing else than an intimate sharing between friends; it means taking time frequently to be alone with Him who we know loves us."</p>
                 <div class="quote-source">The Book of Her Life</div>
             </div>
-             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+            <div class="quote-card">
+                <button class="pdf-btn" onclick="openPDF(16)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Fra_Angelico_003.jpg/220px-Fra_Angelico_003.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Benedict</h3><span>(c. 530 AD)</span></div>
@@ -376,7 +394,8 @@
         <section id="view-lastthings" class="view-section">
             <h2 class="topic-title">The Four Last Things</h2>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(17)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Alphonsus_Liguori.jpg/220px-Alphonsus_Liguori.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Alphonsus Liguori</h3><span>(c. 1750 AD)</span></div>
@@ -385,7 +404,8 @@
                 <div class="quote-source">Preparation for Death</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(18)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Saint_Augustine_by_Philippe_de_Champaigne.jpg/220px-Saint_Augustine_by_Philippe_de_Champaigne.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Augustine of Hippo</h3><span>(c. 415 AD)</span></div>
@@ -394,7 +414,8 @@
                 <div class="quote-source">Confessions, Book I</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(19)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Mosaico_di_San_Giovanni_Crisostomo_%28Santa_Sofia_a_Costantinopoli%29.jpg/220px-Mosaico_di_San_Giovanni_Crisostomo_%28Santa_Sofia_a_Costantinopoli%29.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. John Chrysostom</h3><span>(c. 400 AD)</span></div>
@@ -407,7 +428,8 @@
         <section id="view-scripture" class="view-section">
             <h2 class="topic-title">Scripture & Tradition</h2>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(20)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Basilius_Magnus.jpg/220px-Basilius_Magnus.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Basil the Great</h3><span>(c. 375 AD)</span></div>
@@ -415,8 +437,9 @@
                 <p class="quote-text">"Of the dogmas and messages preserved in the Church, some we possess from written teaching and others we receive from the tradition of the apostles... both have the same force."</p>
                 <div class="quote-source">On the Holy Spirit, 27</div>
             </div>
-             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+            <div class="quote-card">
+                <button class="pdf-btn" onclick="openPDF(21)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vincent_of_Lerins.jpg/220px-Vincent_of_Lerins.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Vincent of Lérins</h3><span>(c. 445 AD)</span></div>
@@ -425,7 +448,8 @@
                 <div class="quote-source">Commonitory</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(22)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Athanasius_s.jpg/220px-Athanasius_s.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Athanasius</h3><span>(c. 330 AD)</span></div>
@@ -438,7 +462,8 @@
         <section id="view-salvation" class="view-section">
             <h2 class="topic-title">Salvation & Grace</h2>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(23)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Saint_Augustine_by_Philippe_de_Champaigne.jpg/220px-Saint_Augustine_by_Philippe_de_Champaigne.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Augustine of Hippo</h3><span>(c. 415 AD)</span></div>
@@ -447,7 +472,8 @@
                 <div class="quote-source">Sermon 169</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(24)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Polycarp.jpg/220px-Polycarp.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>St. Polycarp</h3><span>(c. 155 AD)</span></div>
@@ -456,7 +482,8 @@
                 <div class="quote-source">Letter to the Philippians</div>
             </div>
             <div class="quote-card">
-                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <button class="pdf-btn" onclick="openPDF(25)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Clement_of_Rome.jpg/220px-Clement_of_Rome.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>Pope St. Clement I</h3><span>(c. 96 AD)</span></div>
@@ -614,6 +641,12 @@
                     const clone = card.cloneNode(true);
                     // Re-attach share event since onclick is copied but context matters
                     clone.querySelector('.share-btn').onclick = function() { shareQuote(this); };
+                    // Re-attach PDF event
+                    const pdfBtn = clone.querySelector('.pdf-btn');
+                    if(pdfBtn) {
+                        const pdfNum = pdfBtn.getAttribute('onclick').match(/\d+/)[0];
+                        pdfBtn.onclick = function() { openPDF(pdfNum); };
+                    }
                     resultsContainer.appendChild(clone);
                 }
             });
@@ -661,6 +694,11 @@
                     showToast("Copied to Clipboard");
                 }
             } catch(e) { console.log(e); }
+        }
+
+        function openPDF(pdfNumber) {
+            // Open the PDF in a new window/tab
+            window.open(`pdfs/pdf${pdfNumber}.pdf`, '_blank');
         }
 
         // Auto Hide Nav on Scroll
