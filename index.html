@@ -1,1124 +1,679 @@
-<!DOCTYPE html>
-<html lang="de">
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Texte der Kirchenväter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vox Patrum: Ultimate</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* --- 1. THEME VARIABLES --- */
         :root {
-            --parchment: #f4e8d8;
-            --dark-red: #8b1e1e;
-            --gold: #b8860b;
-            --dark-brown: #3e2723;
-            --light-border: #d4c4a8;
+            --crimson: #7b1113;
+            --gold: #c5a05a;
+            --bg-body: #e8e4d9;
+            --bg-card: #ffffff;
+            --text-main: #2c2c2c;
+            --text-sub: #555;
+            --nav-bg: #1a1a1a;
+            --nav-active: #c5a05a;
+            --nav-inactive: #888;
+            --shadow: rgba(0,0,0,0.1);
+            --nav-height: 70px;
         }
 
-        html {
-            height: 100%;
-            background: linear-gradient(to bottom, #f9f4ed 0%, var(--parchment) 100%);
-            overscroll-behavior-y: none;
+        /* Dark Mode */
+        [data-theme="dark"] {
+            --crimson: #ff6b6b;
+            --gold: #d4af37;
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-sub: #aaaaaa;
+            --nav-bg: #000;
+            --nav-active: #d4af37;
+            --nav-inactive: #555;
+            --shadow: rgba(0,0,0,0.5);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body {
-            font-family: 'Crimson Text', Georgia, serif;
-            background: linear-gradient(to bottom, #f9f4ed 0%, var(--parchment) 100%);
-            color: var(--dark-brown);
-            line-height: 1.7;
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: 'Merriweather', serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        header {
-            background: linear-gradient(135deg, var(--dark-red) 0%, #6b1414 100%);
-            color: var(--parchment);
-            padding: 2rem 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            border-bottom: 3px solid var(--gold);
+        /* --- 2. SPLASH SCREEN --- */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #1a0505; z-index: 9999;
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
+            transition: opacity 0.8s ease-out;
+        }
+        .splash-content i { color: var(--gold); animation: pulse 2s infinite; }
+        .splash-text { font-family: 'Cinzel', serif; color: #fff; margin-top: 20px; letter-spacing: 3px; animation: fadeInUp 1s ease-out; }
+        
+        @keyframes pulse { 0% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } 100% { opacity: 0.5; transform: scale(0.9); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- 3. HEADER & SEARCH --- */
+        #app-header {
+            padding: 1rem; display: flex; justify-content: space-between; align-items: center;
+            background: var(--bg-body); z-index: 500; border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .header-title { font-family: 'Cinzel'; font-weight: bold; color: var(--crimson); font-size: 1.3rem; }
+        .header-actions button { background: none; border: none; font-size: 1.2rem; color: var(--text-main); margin-left: 15px; cursor: pointer; }
+
+        #search-container { padding: 0 1rem 1rem 1rem; display: none; background: var(--bg-body); animation: slideDown 0.2s; }
+        @keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        #search-input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--gold); background: var(--bg-card); color: var(--text-main); font-family: 'Merriweather'; font-size: 1rem; }
+
+        /* --- 4. MAIN CONTENT --- */
+        #app-container {
+            flex: 1; overflow-y: auto; overflow-x: hidden;
+            position: relative; scroll-behavior: smooth;
+            padding-bottom: calc(var(--nav-height) + 20px);
         }
 
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            text-align: center;
+        .view-section { display: none; max-width: 800px; margin: 0 auto; padding: 1rem; }
+        .view-section.active { display: block; animation: fadeScale 0.3s ease-out; }
+        @keyframes fadeScale { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+
+        h2.topic-title {
+            font-family: 'Cinzel', serif; color: var(--crimson); font-size: 1.8rem;
+            text-align: center; margin: 0.5rem 0 2rem 0; border-bottom: 2px solid var(--gold); padding-bottom: 10px;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        .quote-card {
+            background: var(--bg-card); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px var(--shadow); border-left: 5px solid var(--gold); position: relative;
         }
 
-        .subtitle {
-            font-size: 1.1rem;
-            font-style: italic;
-            opacity: 0.9;
-        }
+        .card-header { display: flex; align-items: center; gap: 15px; margin-bottom: 1rem; }
+        .saint-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
+        .saint-info h3 { font-family: 'Cinzel'; font-size: 1rem; color: var(--crimson); font-weight: 700; }
+        .saint-info span { font-size: 0.75rem; color: var(--text-sub); display: block; }
+        .quote-text { font-style: italic; color: var(--text-main); margin-bottom: 1rem; font-size: 1.05rem; }
+        .quote-source { font-size: 0.75rem; text-align: right; color: var(--text-sub); border-top: 1px solid var(--shadow); padding-top: 8px; font-weight: bold; }
 
+        .share-btn {
+            position: absolute; top: 1rem; right: 1rem;
+            background: none; border: none; color: var(--gold);
+            font-size: 1.1rem; cursor: pointer; opacity: 0.6;
+        }
+        .share-btn:hover { opacity: 1; }
+
+        /* --- 5. SCROLLABLE NAVIGATION --- */
         nav {
-            background: var(--dark-brown);
-            border-bottom: 2px solid var(--gold);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            position: fixed; bottom: 0; left: 0; width: 100%; height: var(--nav-height);
+            background-color: var(--nav-bg); z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease-in-out;
         }
+        nav.nav-hidden { transform: translateY(100%); }
 
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Scrollable container for buttons */
+        .nav-scroller {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            padding: 0 1rem;
+            overflow-x: auto;
+            height: 100%;
+            align-items: center;
+            padding: 0 10px;
+            /* Hide Scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE */
         }
+        .nav-scroller::-webkit-scrollbar { display: none; /* Chrome/Safari */ }
 
-        nav a {
-            color: var(--parchment);
-            text-decoration: none;
-            padding: 1rem 1.5rem;
-            display: block;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            border-bottom: 3px solid transparent;
-        }
-
-        nav a:hover, nav a.active {
-            background: rgba(184, 134, 11, 0.2);
-            border-bottom-color: var(--gold);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .search-box {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-            border: 1px solid var(--light-border);
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            font-size: 1rem;
-            border: 2px solid var(--light-border);
-            border-radius: 4px;
-            font-family: inherit;
-            transition: border-color 0.3s;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--gold);
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border: 1px solid var(--light-border);
-            transition: transform 0.3s, box-shadow 0.3s;
+        nav button {
+            background: none; border: none; color: var(--nav-inactive);
+            font-family: 'Cinzel'; font-size: 0.65rem;
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+            min-width: 80px; /* Force width so they scroll */
+            flex-shrink: 0; /* Prevent squishing */
             cursor: pointer;
+            transition: color 0.2s;
         }
+        nav button i { font-size: 1.3rem; }
+        nav button.active { color: var(--nav-active); }
+        nav button.active i { transform: translateY(-3px); }
 
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        /* Toast */
+        #toast {
+            visibility: hidden; background-color: #333; color: #fff; text-align: center;
+            border-radius: 50px; padding: 10px 20px; position: fixed; z-index: 2000;
+            left: 50%; bottom: 90px; transform: translateX(-50%); font-family: 'Cinzel';
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s;
+            font-size: 0.9rem; pointer-events: none;
         }
+        #toast.show { visibility: visible; opacity: 1; }
 
-        .card h3 {
-            color: var(--dark-red);
-            margin-bottom: 0.8rem;
-            font-size: 1.4rem;
-            border-bottom: 2px solid var(--gold);
-            padding-bottom: 0.5rem;
-        }
-
-        .card p {
-            color: #555;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .card-link {
-            display: inline-block;
-            color: var(--dark-red);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            border: 2px solid var(--dark-red);
-            border-radius: 4px;
-            transition: all 0.3s;
-        }
-
-        .card-link:hover {
-            background: var(--dark-red);
-            color: white;
-        }
-
-        .father-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--light-border);
-            margin-bottom: 1rem;
-        }
-
-        .father-portrait {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 3px solid var(--gold);
-            background: linear-gradient(135deg, var(--dark-red), var(--gold));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        .father-info {
-            flex: 1;
-        }
-
-        .father-info h3 {
-            color: var(--dark-red);
-            margin-bottom: 0.3rem;
-        }
-
-        .father-info span {
-            color: #666;
-            font-size: 0.9rem;
-            font-style: italic;
-        }
-
-        .pdf-viewer {
-            width: 100%;
-            height: 600px;
-            border: 2px solid var(--light-border);
-            border-radius: 8px;
-            margin: 1rem 0;
-        }
-
-        .text-entry {
-            background: white;
-            border: 2px solid var(--light-border);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .text-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--gold);
-        }
-
-        .text-portrait {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 3px solid var(--gold);
-            background: linear-gradient(135deg, var(--dark-red), var(--gold));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 2rem;
-            flex-shrink: 0;
-        }
-
-        .text-info h3 {
-            color: var(--dark-red);
-            margin-bottom: 0.3rem;
-            font-size: 1.5rem;
-        }
-
-        .text-info .text-title {
-            color: var(--dark-brown);
-            font-style: italic;
-            font-size: 1.1rem;
-        }
-
-        .text-info .text-dates {
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 0.3rem;
-        }
-
-        .topic-section {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            border: 1px solid var(--light-border);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .topic-section h2 {
-            color: var(--dark-red);
-            border-bottom: 3px solid var(--gold);
-            padding-bottom: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .alphabet-nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            justify-content: center;
-        }
-
-        .alphabet-nav button {
-            padding: 0.5rem 1rem;
-            background: var(--dark-red);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .alphabet-nav button:hover,
-        .alphabet-nav button.active {
-            background: var(--gold);
-            color: var(--dark-brown);
-        }
-
-        footer {
-            background: var(--dark-brown);
-            color: var(--parchment);
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-            border-top: 3px solid var(--gold);
-        }
-
-        .page-content {
-            display: none;
-        }
-
-        .page-content.active {
-            display: block;
-        }
-
-        .nav-toggle {
-            position: absolute;
-            top: 0.3rem;
-            font-size: 1.6rem;
-            color: var(--parchment);
-            background: var(--dark-brown);
-            padding: 0.3rem 0.6rem;
-            border-radius: 50%;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.3s ease;
-            z-index: 200;
-        }
-        
-        .nav-toggle.left {
-            left: 0.5rem;
-        }
-        
-        .nav-toggle.right {
-            right: 0.5rem;
-        }
-        
-        .nav-toggle.hidden-bg {
-            background: none;
-            color: var(--dark-red);
-        }
-        
-        .nav-content.hidden {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .nav-content {
-                flex-direction: column;
-            }
-
-            nav a {
-                text-align: center;
-            }
-
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
+        /* Tablet/Desktop */
+        @media (min-width: 769px) {
+            nav { top: 0; bottom: auto; height: 80px; }
+            nav.nav-hidden { transform: translateY(-100%); }
+            #app-container { padding-top: 80px; }
+            #app-header { display: none; }
+            .nav-scroller { justify-content: center; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <h1>✠ Texte der Kirchenväter ✠</h1>
-            <p class="subtitle">Quellen der katholischen Tradition</p>
-        </div>
-    </header>
 
-    <nav>
-        <div class="nav-toggle left" onclick="toggleNav()">&#9660;</div>
-        <div class="nav-toggle right" onclick="toggleNav()">&#9660;</div>
-        <div class="nav-content">
-            <a href="#" class="nav-link active" data-page="home">Startseite</a>
-            <a href="#" class="nav-link" data-page="topics">Themen</a>
-            <a href="#" class="nav-link" data-page="fathers">Kirchenväter</a>
-            <a href="#" class="nav-link" data-page="about">Über</a>
-            <a href="#" class="nav-link" data-page="contact">Kontakt</a>
-        </div>
-    </nav>
-
-    <div class="container">
-        <!-- Startseite -->
-        <div id="page-home" class="page-content active">
-            <div class="topic-section">
-                <h2>Willkommen</h2>
-                <p style="text-align: justify; text-justify: inter-word;">Diese Website bietet Zugang zu wichtigen Texten der Kirchenväter, geordnet nach theologischen Themen. Die Kirchenväter sind die frühen christlichen Theologen und Bischöfe, deren Schriften die Grundlage der katholischen Lehre bilden. Nutzen Sie die Navigation, um nach Themen oder einzelnen Kirchenvätern zu suchen.</p>
-                <p style="margin-bottom: 1em;"></p>
-                <p style="text-align: justify; text-justify: inter-word;">Die Meinungen der Kirchenväter sind von zentraler Bedeutung, weil sie zu den frühesten und maßgeblichsten Zeugen des christlichen Glaubens gehören. Sie lebten in der Zeit unmittelbar nach den Aposteln und prägten entscheidend, wie die Lehre der Kirche verstanden, weitergegeben und geschützt wurde. Besonders wichtig ist, dass die Kirchenväter jene waren, die im 4. Jahrhundert die Bücher der Heiligen Schrift überprüften, anerkannten und schließlich die Bibel in ihrer heutigen Form zusammenstellten. Ihre Urteile beruhen also nicht auf späteren Traditionen, sondern auf direkter Nähe zur apostolischen Überlieferung. Wer die Bibel achtet, sollte deshalb auch jene achten, die sie überliefert und bewahrt haben.</p>
-                <p style="margin-bottom: 1em;"></p>
-                <h2>die Kirchenväter der einen, ungeteilten, katholischen Kirche.</h2>
-            </div>
-
-            <h2 style="color: var(--dark-red); margin-bottom: 1rem;">Aktuelle Themen</h2>
-            <div class="content-grid">
-                <div class="card">
-                    <h3>Trinität</h3>
-                    <p>Texte über die Dreieinigkeit Gottes: Vater, Sohn und Heiliger Geist.</p>
-                    <a href="#" class="card-link" onclick="showTopic('trinität'); return false;">Texte ansehen</a>
-                </div>
-                <div class="card">
-                    <h3>Eucharistie</h3>
-                    <p>Die Lehre über die heilige Eucharistie und das Opfer der Messe.</p>
-                    <a href="#" class="card-link" onclick="showTopic('eucharistie'); return false;">Texte ansehen</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Themenseite -->
-        <div id="page-topics" class="page-content">
-            <div class="search-box">
-                <input type="text" class="search-input" id="topic-search" placeholder="Suche nach Themen...">
-            </div>
-
-            <div class="content-grid" id="topics-grid">
-                <div class="card" data-topic="trinität">
-                    <h3>Trinität</h3>
-                    <p>Texte über die Dreieinigkeit Gottes: Vater, Sohn und Heiliger Geist.</p>
-                    <a href="#" class="card-link" onclick="showTopic('trinität'); return false;">Texte ansehen</a>
-                </div>
-                <div class="card" data-topic="eucharistie">
-                    <h3>Eucharistie</h3>
-                    <p>Die Lehre über die heilige Eucharistie und das Opfer der Messe.</p>
-                    <a href="#" class="card-link" onclick="showTopic('eucharistie'); return false;">Texte ansehen</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Thema: Trinität -->
-        <div id="topic-trinität" class="page-content">
-            <div class="topic-section">
-                <h2>Trinität</h2>
-                <p>Die Lehre von der Dreieinigkeit ist zentral für den christlichen Glauben. Die Kirchenväter haben diese Lehre gegen verschiedene Irrlehren verteidigt und theologisch vertieft.</p>
-            </div>
-
-            <!-- Aristides von Athen -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">A</div>
-                    <div class="text-info">
-                        <h3>Aristides von Athen</h3>
-                        <div class="text-title">Apologie des Aristides</div>
-                        <div class="text-dates">2. Jahrhundert n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/aristides/Trinität.pdf#toolbar=1" title="Aristides - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/aristides/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Athenagoras von Athen -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">A</div>
-                    <div class="text-info">
-                        <h3>Athenagoras von Athen</h3>
-                        <div class="text-title">Bittschrift für die Christen</div>
-                        <div class="text-dates">ca. 133-190 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/athenagoras/Trinität.pdf#toolbar=1" title="Athenagoras - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/athenagoras/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Barnabas -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">B</div>
-                    <div class="text-info">
-                        <h3>Barnabas</h3>
-                        <div class="text-title">Barnabasbrief</div>
-                        <div class="text-dates">1.-2. Jahrhundert n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/barnabas/Trinität.pdf#toolbar=1" title="Barnabas - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/barnabas/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Clemens von Alexandrien -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">C</div>
-                    <div class="text-info">
-                        <h3>Clemens von Alexandrien</h3>
-                        <div class="text-title">Mahnrede an die Heiden, Der Erzieher, Buch 1</div>
-                        <div class="text-dates">ca. 150-215 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/clemens-alexandrien/Trinität.pdf#toolbar=1" title="Clemens von Alexandrien - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/clemens-alexandrien/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Clemens von Rom -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">C</div>
-                    <div class="text-info">
-                        <h3>Clemens von Rom</h3>
-                        <div class="text-title">Erster Brief des Clemens an die Korinther</div>
-                        <div class="text-dates">ca. 35-99 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/clemens-rom/Trinität.pdf#toolbar=1" title="Clemens von Rom - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/clemens-rom/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Die Didache -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">D</div>
-                    <div class="text-info">
-                        <h3>Die Didache</h3>
-                        <div class="text-title">Lehre der 12 Apostel, Kapitel 7</div>
-                        <div class="text-dates">ca. 50-120 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/didache/Trinität.pdf#toolbar=1" title="Didache - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/didache/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Hippolytus von Rom -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">H</div>
-                    <div class="text-info">
-                        <h3>Hippolytus von Rom</h3>
-                        <div class="text-title">Gegen die Häresie des Noetus</div>
-                        <div class="text-dates">ca. 170-235 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/hippolytus/Trinität.pdf#toolbar=1" title="Hippolytus - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/hippolytus/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Ignatius von Antiochien -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">I</div>
-                    <div class="text-info">
-                        <h3>Ignatius von Antiochien</h3>
-                        <div class="text-title">Die Briefe des Ignatius von Antiochien</div>
-                        <div class="text-dates">ca. 35-108 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/ignatius/Trinität.pdf#toolbar=1" title="Ignatius - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/ignatius/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Irenäus von Lyon -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">I</div>
-                    <div class="text-info">
-                        <h3>Irenäus von Lyon</h3>
-                        <div class="text-title">Gegen die Häresien: Buch 1</div>
-                        <div class="text-dates">ca. 135-202 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/irenaeus/Trinität.pdf#toolbar=1" title="Irenäus - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/irenaeus/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Justin der Märtyrer -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">J</div>
-                    <div class="text-info">
-                        <h3>Justin der Märtyrer</h3>
-                        <div class="text-title">Dialog mit dem Juden Trypho: Erste Apologie</div>
-                        <div class="text-dates">ca. 100-165 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/justin/Trinität.pdf#toolbar=1" title="Justin - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/justin/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Melito von Sardes -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">M</div>
-                    <div class="text-info">
-                        <h3>Melito von Sardes</h3>
-                        <div class="text-title">Vom Passa</div>
-                        <div class="text-dates">ca. 110-180 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/melito/Trinität.pdf#toolbar=1" title="Melito - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/melito/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Origenes -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">O</div>
-                    <div class="text-info">
-                        <h3>Origenes</h3>
-                        <div class="text-title">Über die Grundlehren der Glaubenswissenschaft</div>
-                        <div class="text-dates">ca. 185-254 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/origenes/Trinität.pdf#toolbar=1" title="Origenes - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/origenes/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Polykarp von Smyrna -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">P</div>
-                    <div class="text-info">
-                        <h3>Polykarp von Smyrna</h3>
-                        <div class="text-title">Martyrium des heiligen Polykarpos</div>
-                        <div class="text-dates">ca. 69-155 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/polykarp/Trinität.pdf#toolbar=1" title="Polykarp - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/polykarp/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Tertullian -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">T</div>
-                    <div class="text-info">
-                        <h3>Tertullian</h3>
-                        <div class="text-title">Gegen Praxeas</div>
-                        <div class="text-dates">ca. 155-220 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/tertullian/Trinität.pdf#toolbar=1" title="Tertullian - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/tertullian/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Theophilus von Antiochien -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">T</div>
-                    <div class="text-info">
-                        <h3>Theophilus von Antiochien</h3>
-                        <div class="text-title">An Autolykus</div>
-                        <div class="text-dates">ca. 120-183 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/theophilus/Trinität.pdf#toolbar=1" title="Theophilus - Trinität"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/theophilus/Trinität.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <a href="#" onclick="navigateTo('topics'); return false;" style="display: inline-block; margin-top: 1rem; color: var(--dark-red);">← Zurück zu allen Themen</a>
-        </div>
-
-        <!-- Thema: Eucharistie -->
-        <div id="topic-eucharistie" class="page-content">
-            <div class="topic-section">
-                <h2>Eucharistie</h2>
-                <p>Die heilige Eucharistie ist das Herzstück des katholischen Gottesdienstes. Die Kirchenväter bezeugen die Realpräsenz Christi im Altarsakrament.</p>
-            </div>
-
-            <!-- Ignatius von Antiochien -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">I</div>
-                    <div class="text-info">
-                        <h3>Ignatius von Antiochien</h3>
-                        <div class="text-title">Die Briefe des Ignatius von Antiochien</div>
-                        <div class="text-dates">ca. 35-108 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/ignatius/Eucharistie.pdf#toolbar=1" title="Ignatius - Eucharistie"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/ignatius/Eucharistie.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Justin der Märtyrer -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">J</div>
-                    <div class="text-info">
-                        <h3>Justin der Märtyrer</h3>
-                        <div class="text-title">Erste Apologie</div>
-                        <div class="text-dates">ca. 100-165 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/justin/Eucharistie.pdf#toolbar=1" title="Justin - Eucharistie"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/justin/Eucharistie.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Clemens von Alexandrien -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">C</div>
-                    <div class="text-info">
-                        <h3>Clemens von Alexandrien</h3>
-                        <div class="text-title">Mahnrede an die Heiden, Der Erzieher, Buch 1</div>
-                        <div class="text-dates">ca. 150-215 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/clemens-alexandrien/Eucharistie.pdf#toolbar=1" title="Clemens von Alexandrien - Eucharistie"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/clemens-alexandrien/Eucharistie.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Irenäus von Lyon -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">I</div>
-                    <div class="text-info">
-                        <h3>Irenäus von Lyon</h3>
-                        <div class="text-title">Gegen die Häresien: Buch 4</div>
-                        <div class="text-dates">ca. 135-202 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/irenaeus/Eucharistie.pdf#toolbar=1" title="Irenäus - Eucharistie"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/irenaeus/Eucharistie.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Tertullian -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">T</div>
-                    <div class="text-info">
-                        <h3>Tertullian</h3>
-                        <div class="text-title">Über die Auferstehung des Fleisches</div>
-                        <div class="text-dates">ca. 155-220 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/tertullian/Eucharistie.pdf#toolbar=1" title="Tertullian - Eucharistie"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/tertullian/Eucharistie.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <!-- Augustinus von Hippo -->
-            <div class="text-entry">
-                <div class="text-header">
-                    <div class="text-portrait">A</div>
-                    <div class="text-info">
-                        <h3>Augustinus von Hippo</h3>
-                        <div class="text-title">Predigten des heiligen Augustinus</div>
-                        <div class="text-dates">354-430 n.Chr.</div>
-                    </div>
-                </div>
-                <iframe class="pdf-viewer" src="pdfs/augustinus/Eucharistie.pdf#toolbar=1" title="Augustinus - Eucharistie"></iframe>
-                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666; font-style: italic;">
-                    Falls das PDF nicht angezeigt wird, <a href="pdfs/augustinus/Eucharistie.pdf" target="_blank" style="color: var(--dark-red);">hier klicken zum Download</a>.
-                </p>
-            </div>
-
-            <a href="#" onclick="navigateTo('topics'); return false;" style="display: inline-block; margin-top: 1rem; color: var(--dark-red);">← Zurück zu allen Themen</a>
-        </div>
-
-        <!-- Kirchenväter Seite -->
-        <div id="page-fathers" class="page-content">
-            <div class="search-box">
-                <input type="text" class="search-input" id="father-search" placeholder="Suche nach Kirchenvätern...">
-            </div>
-
-            <div class="alphabet-nav">
-                <button onclick="filterByLetter('all')" class="active">Alle</button>
-                <button onclick="filterByLetter('A')">A</button>
-                <button onclick="filterByLetter('B')">B</button>
-                <button onclick="filterByLetter('C')">C</button>
-                <button onclick="filterByLetter('D')">D</button>
-                <button onclick="filterByLetter('H')">H</button>
-                <button onclick="filterByLetter('I')">I</button>
-                <button onclick="filterByLetter('J')">J</button>
-                <button onclick="filterByLetter('M')">M</button>
-                <button onclick="filterByLetter('O')">O</button>
-                <button onclick="filterByLetter('P')">P</button>
-                <button onclick="filterByLetter('T')">T</button>
-            </div>
-
-            <div id="fathers-list">
-                <div class="father-item" data-father="aristides" data-letter="A">
-                    <div class="father-portrait">A</div>
-                    <div class="father-info">
-                        <h3>Aristides von Athen</h3>
-                        <span>2. Jahrhundert n.Chr.</span>
-                    </div>
-                    <a href="pdfs/aristides/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="athenagoras" data-letter="A">
-                    <div class="father-portrait">A</div>
-                    <div class="father-info">
-                        <h3>Athenagoras von Athen</h3>
-                        <span>ca. 133-190 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/athenagoras/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="augustinus" data-letter="A">
-                    <div class="father-portrait">A</div>
-                    <div class="father-info">
-                        <h3>Augustinus von Hippo</h3>
-                        <span>354-430 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/augustinus/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="barnabas" data-letter="B">
-                    <div class="father-portrait">B</div>
-                    <div class="father-info">
-                        <h3>Barnabas</h3>
-                        <span>1.-2. Jahrhundert n.Chr.</span>
-                    </div>
-                    <a href="pdfs/barnabas/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="clemens-alexandrien" data-letter="C">
-                    <div class="father-portrait">C</div>
-                    <div class="father-info">
-                        <h3>Clemens von Alexandrien</h3>
-                        <span>ca. 150-215 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/clemens-alexandrien/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="clemens-rom" data-letter="C">
-                    <div class="father-portrait">C</div>
-                    <div class="father-info">
-                        <h3>Clemens von Rom</h3>
-                        <span>ca. 35-99 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/clemens-rom/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="didache" data-letter="D">
-                    <div class="father-portrait">D</div>
-                    <div class="father-info">
-                        <h3>Die Didache</h3>
-                        <span>ca. 50-120 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/didache/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="hippolytus" data-letter="H">
-                    <div class="father-portrait">H</div>
-                    <div class="father-info">
-                        <h3>Hippolytus von Rom</h3>
-                        <span>ca. 170-235 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/hippolytus/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="ignatius" data-letter="I">
-                    <div class="father-portrait">I</div>
-                    <div class="father-info">
-                        <h3>Ignatius von Antiochien</h3>
-                        <span>ca. 35-108 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/ignatius/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="irenaeus" data-letter="I">
-                    <div class="father-portrait">I</div>
-                    <div class="father-info">
-                        <h3>Irenäus von Lyon</h3>
-                        <span>ca. 135-202 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/irenaeus/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="justin" data-letter="J">
-                    <div class="father-portrait">J</div>
-                    <div class="father-info">
-                        <h3>Justin der Märtyrer</h3>
-                        <span>ca. 100-165 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/justin/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="melito" data-letter="M">
-                    <div class="father-portrait">M</div>
-                    <div class="father-info">
-                        <h3>Melito von Sardes</h3>
-                        <span>ca. 110-180 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/melito/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="origenes" data-letter="O">
-                    <div class="father-portrait">O</div>
-                    <div class="father-info">
-                        <h3>Origenes</h3>
-                        <span>ca. 185-254 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/origenes/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="polykarp" data-letter="P">
-                    <div class="father-portrait">P</div>
-                    <div class="father-info">
-                        <h3>Polykarp von Smyrna</h3>
-                        <span>ca. 69-155 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/polykarp/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="tertullian" data-letter="T">
-                    <div class="father-portrait">T</div>
-                    <div class="father-info">
-                        <h3>Tertullian</h3>
-                        <span>ca. 155-220 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/tertullian/" class="card-link">Texte</a>
-                </div>
-
-                <div class="father-item" data-father="theophilus" data-letter="T">
-                    <div class="father-portrait">T</div>
-                    <div class="father-info">
-                        <h3>Theophilus von Antiochien</h3>
-                        <span>ca. 120-183 n.Chr.</span>
-                    </div>
-                    <a href="pdfs/theophilus/" class="card-link">Texte</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Über Seite -->
-        <div id="page-about" class="page-content">
-            <div class="topic-section">
-                <h2>Über diese Website</h2>
-                <p>Diese Website wurde erstellt, um wichtige Texte der Kirchenväter in deutscher Sprache zugänglich zu machen. Die Kirchenväter sind die frühen christlichen Theologen und Bischöfe (ca. 1.-8. Jahrhundert), deren Schriften für die katholische Kirche von grundlegender Bedeutung sind.</p>
-                
-                <h3 style="color: var(--dark-red); margin: 2rem 0 1rem 0;">Ziel</h3>
-                <p>Unser Ziel ist es, authentische Quellen der katholischen Tradition bereitzustellen, die nach theologischen Themen geordnet sind. Alle Texte werden als PDF-Dateien zur Verfügung gestellt und können heruntergeladen oder direkt im Browser gelesen werden.</p>
-                
-                <h3 style="color: var(--dark-red); margin: 2rem 0 1rem 0;">Nutzung</h3>
-                <p>Die Texte sind für das persönliche Studium, die Katechese und die theologische Forschung frei verfügbar.</p>
-            </div>
-        </div>
-
-        <!-- Kontakt Seite -->
-        <div id="page-contact" class="page-content">
-            <div class="topic-section">
-                <h2>Kontakt</h2>
-                <p>Für Fragen, Anregungen oder Hinweise zu den Texten können Sie uns gerne kontaktieren:</p>
-                
-                <p style="margin-top: 2rem;">
-                    <strong>E-Mail:</strong> Noch keine Mail verfügbar.<br>
-                </p>
-                
-                <h3 style="color: var(--dark-red); margin: 2rem 0 1rem 0;">Mitarbeit</h3>
-                <p>Wenn Sie weitere Texte beitragen oder bei der Übersetzung helfen möchten, freuen wir uns über Ihre Nachricht.</p>
-            </div>
+    <div id="splash-screen">
+        <div class="splash-content">
+            <i class="fa-solid fa-cross fa-4x"></i>
+            <div class="splash-text">VOX PATRUM</div>
         </div>
     </div>
 
-    <footer>
-        <p>✠ Ad Maiorem Dei Gloriam ✠</p>
-        <p style="margin-top: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
-            © 2025 Texte der Kirchenväter | Keine Rechte vorbehalten.
-        </p>
-    </footer>
+    <div id="toast">Topic Changed</div>
+
+    <div id="app-header">
+        <div class="header-title">Vox Patrum</div>
+        <div class="header-actions">
+            <button onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button onclick="toggleTheme()"><i id="theme-icon" class="fa-solid fa-moon"></i></button>
+        </div>
+    </div>
+    
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search wisdom..." onkeyup="performSearch()">
+    </div>
+
+    <div id="app-container">
+        
+        <section id="view-home" class="view-section active">
+            <div style="text-align: center; padding: 3rem 1rem;">
+                <h1 style="font-family: 'Cinzel'; font-size: 2.5rem; color: var(--crimson); margin-bottom: 0.5rem;">Vox Patrum</h1>
+                <p style="color: var(--gold); font-family: 'Cinzel'; margin-bottom: 3rem;">The Wisdom of the Ages</p>
+                <div style="opacity: 0.6; margin-bottom: 3rem;">
+                    <i class="fa-solid fa-hand-pointer fa-2x" style="color: var(--text-main);"></i>
+                    <p style="margin-top:10px; font-size: 0.9rem;">Swipe Screen Left or Right to Change Topic</p>
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-sub);">
+                    <p>Swipe the bottom menu to see more topics.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-eucharist" class="view-section">
+            <h2 class="topic-title">The Eucharist</h2>
+            <div class="quote-card">
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Ignatius_Antioch.jpg/220px-Ignatius_Antioch.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Ignatius of Antioch</h3><span>(c. 107 AD)</span></div>
+                </div>
+                <p class="quote-text">"I have no taste for corruptible food... I desire the Bread of God, which is the flesh of Jesus Christ... and for drink I desire His blood, which is love incorruptible."</p>
+                <div class="quote-source">Letter to the Romans, 7:3</div>
+            </div>
+            <div class="quote-card">
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/St_John_Chrysostom_icon_full_body.jpg/178px-St_John_Chrysostom_icon_full_body.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. John Chrysostom</h3><span>(c. 400 AD)</span></div>
+                </div>
+                <p class="quote-text">"He gives Himself to you, not only that you may see Him, but also to be your food... He has mixed Himself with us, that we might become one thing."</p>
+                <div class="quote-source">Homily 82 on Matthew</div>
+            </div>
+            <div class="quote-card">
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Carlo_Crivelli_005.jpg/235px-Carlo_Crivelli_005.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Thomas Aquinas</h3><span>(c. 1264 AD)</span></div>
+                </div>
+                <p class="quote-text">"O precious and wonderful banquet! It is the Bread that is eaten, but not consumed; that is eaten by everyone, yet remains whole."</p>
+                <div class="quote-source">Liturgy for Corpus Christi</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Saint_Justin_Martyr_-_Theophanes_the_Cretan.jpg/220px-Saint_Justin_Martyr_-_Theophanes_the_Cretan.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Justin Martyr</h3><span>(c. 155 AD)</span></div>
+                </div>
+                <p class="quote-text">"For not as common bread and common drink do we receive these; but... we have been taught that the food which is blessed by the prayer of His word... is the flesh and blood of that Jesus who was made flesh."</p>
+                <div class="quote-source">First Apology, Ch 66</div>
+            </div>
+        </section>
+
+        <section id="view-trinity" class="view-section">
+            <h2 class="topic-title">The Holy Trinity</h2>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Gregorius_Theologus.jpg/220px-Gregorius_Theologus.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Gregory Nazianzen</h3><span>(c. 380 AD)</span></div>
+                </div>
+                <p class="quote-text">"No sooner do I conceive of the One than I am illumined by the Splendour of the Three; no sooner do I distinguish Them than I am carried back to the One."</p>
+                <div class="quote-source">Oration 40</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sandro_Botticelli_-_St_Augustine_in_His_Study_-_WGA02748.jpg/250px-Sandro_Botticelli_-_St_Augustine_in_His_Study_-_WGA02748.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Augustine of Hippo</h3><span>(c. 415 AD)</span></div>
+                </div>
+                <p class="quote-text">"The Father is the One who loves; the Son is the Beloved; and the Holy Spirit is the Love itself which binds them. If you see charity, you see the Trinity."</p>
+                <div class="quote-source">De Trinitate, Book VIII</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Athanasius_s.jpg/220px-Athanasius_s.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Athanasius</h3><span>(c. 330 AD)</span></div>
+                </div>
+                <p class="quote-text">"For the Son is in the Father... as radiance from light, and stream from fountain; so that whosoever sees the Son, sees what is proper to the Father."</p>
+                <div class="quote-source">Orations against the Arians</div>
+            </div>
+        </section>
+
+        <section id="view-mary" class="view-section">
+            <h2 class="topic-title">The Theotokos</h2>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Theotokos_Vladimiskaya.jpg/220px-Theotokos_Vladimiskaya.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Cyril of Alexandria</h3><span>(c. 431 AD)</span></div>
+                </div>
+                <p class="quote-text">"If our Lord Jesus Christ is God, how is the holy Virgin who bore [Him] not the Mother of God?"</p>
+                <div class="quote-source">Letter 1 to the Monks of Egypt</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Saint_Irenaeus.jpg/220px-Saint_Irenaeus.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Irenaeus</h3><span>(c. 180 AD)</span></div>
+                </div>
+                <p class="quote-text">"The knot of Eve's disobedience was loosed by the obedience of Mary. For what the virgin Eve had bound fast through unbelief, this did the virgin Mary set free through faith."</p>
+                <div class="quote-source">Against Heresies, Book III</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ephrem_the_Syrian_contemporary_icon.jpg/220px-Ephrem_the_Syrian_contemporary_icon.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Ephrem the Syrian</h3><span>(c. 370 AD)</span></div>
+                </div>
+                <p class="quote-text">"The Lord entered her and became a servant; the Word entered her, and became silent within her; thunder entered her and his voice was still."</p>
+                <div class="quote-source">Hymns on the Nativity</div>
+            </div>
+        </section>
+
+        <section id="view-authority" class="view-section">
+            <h2 class="topic-title">Church Authority</h2>
+             <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Saint_Irenaeus.jpg/220px-Saint_Irenaeus.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Irenaeus</h3><span>(c. 180 AD)</span></div>
+                </div>
+                <p class="quote-text">"It is a matter of necessity that every Church should agree with this Church [of Rome], on account of its preeminent authority."</p>
+                <div class="quote-source">Against Heresies, Book III</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Cyprianus_Carthaginensis.jpg/220px-Cyprianus_Carthaginensis.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Cyprian</h3><span>(c. 251 AD)</span></div>
+                </div>
+                <p class="quote-text">"He who does not have the Church for his mother cannot have God for his father."</p>
+                <div class="quote-source">On the Unity of the Church</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Saint_Jerome_Caravaggio_%28Monserrat%29.jpg/220px-Saint_Jerome_Caravaggio_%28Monserrat%29.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Jerome</h3><span>(c. 376 AD)</span></div>
+                </div>
+                <p class="quote-text">"I join in communion with none but your blessedness, that is, with the Chair of Peter. I know that this is the rock on which the Church has been built."</p>
+                <div class="quote-source">Letter 15</div>
+            </div>
+        </section>
+
+        <section id="view-prayer" class="view-section">
+            <h2 class="topic-title">Prayer & Life</h2>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Th%C3%A9r%C3%A8se_de_Lisieux_02.jpg/220px-Th%C3%A9r%C3%A8se_de_Lisieux_02.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Thérèse of Lisieux</h3><span>(c. 1895 AD)</span></div>
+                </div>
+                <p class="quote-text">"For me, prayer is a surge of the heart; it is a simple look turned toward heaven, it is a cry of recognition and of love."</p>
+                <div class="quote-source">Autobiography</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Teresa_of_Avila_by_Peter_Paul_Rubens.jpg/220px-Teresa_of_Avila_by_Peter_Paul_Rubens.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Teresa of Ávila</h3><span>(1565 AD)</span></div>
+                </div>
+                <p class="quote-text">"Mental prayer in my opinion is nothing else than an intimate sharing between friends; it means taking time frequently to be alone with Him who we know loves us."</p>
+                <div class="quote-source">The Book of Her Life</div>
+            </div>
+             <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Fra_Angelico_003.jpg/220px-Fra_Angelico_003.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Benedict</h3><span>(c. 530 AD)</span></div>
+                </div>
+                <p class="quote-text">"We must know that God regards our purity of heart and tears of compunction, not our many words."</p>
+                <div class="quote-source">The Rule</div>
+            </div>
+        </section>
+
+        <section id="view-lastthings" class="view-section">
+            <h2 class="topic-title">The Four Last Things</h2>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Alphonsus_Liguori.jpg/220px-Alphonsus_Liguori.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Alphonsus Liguori</h3><span>(c. 1750 AD)</span></div>
+                </div>
+                <p class="quote-text">"Life is short; death is certain; eternity is long. One thing is necessary: to save your soul."</p>
+                <div class="quote-source">Preparation for Death</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Saint_Augustine_by_Philippe_de_Champaigne.jpg/220px-Saint_Augustine_by_Philippe_de_Champaigne.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Augustine of Hippo</h3><span>(c. 415 AD)</span></div>
+                </div>
+                <p class="quote-text">"You have made us for Yourself, O Lord, and our heart is restless until it rests in You."</p>
+                <div class="quote-source">Confessions, Book I</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Mosaico_di_San_Giovanni_Crisostomo_%28Santa_Sofia_a_Costantinopoli%29.jpg/220px-Mosaico_di_San_Giovanni_Crisostomo_%28Santa_Sofia_a_Costantinopoli%29.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. John Chrysostom</h3><span>(c. 400 AD)</span></div>
+                </div>
+                <p class="quote-text">"The present life is a wrestling school. For the time of retribution is not now, but the time of toils and of exercises."</p>
+                <div class="quote-source">Homily 9 on 2 Corinthians</div>
+            </div>
+        </section>
+
+        <section id="view-scripture" class="view-section">
+            <h2 class="topic-title">Scripture & Tradition</h2>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Basilius_Magnus.jpg/220px-Basilius_Magnus.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Basil the Great</h3><span>(c. 375 AD)</span></div>
+                </div>
+                <p class="quote-text">"Of the dogmas and messages preserved in the Church, some we possess from written teaching and others we receive from the tradition of the apostles... both have the same force."</p>
+                <div class="quote-source">On the Holy Spirit, 27</div>
+            </div>
+             <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vincent_of_Lerins.jpg/220px-Vincent_of_Lerins.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Vincent of Lérins</h3><span>(c. 445 AD)</span></div>
+                </div>
+                <p class="quote-text">"We must hold fast to that which has been believed everywhere, always, and by all."</p>
+                <div class="quote-source">Commonitory</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Athanasius_s.jpg/220px-Athanasius_s.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Athanasius</h3><span>(c. 330 AD)</span></div>
+                </div>
+                <p class="quote-text">"But what is also to the point, let us note that the very tradition, teaching, and faith of the Catholic Church from the beginning... is that which the Lord gave, the Apostles preached, and the Fathers kept."</p>
+                <div class="quote-source">Letter to Serapion</div>
+            </div>
+        </section>
+
+        <section id="view-salvation" class="view-section">
+            <h2 class="topic-title">Salvation & Grace</h2>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Saint_Augustine_by_Philippe_de_Champaigne.jpg/220px-Saint_Augustine_by_Philippe_de_Champaigne.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Augustine of Hippo</h3><span>(c. 415 AD)</span></div>
+                </div>
+                <p class="quote-text">"God, who created you without you, will not save you without you."</p>
+                <div class="quote-source">Sermon 169</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Polycarp.jpg/220px-Polycarp.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>St. Polycarp</h3><span>(c. 155 AD)</span></div>
+                </div>
+                <p class="quote-text">"By grace ye are saved, not of works, but by the will of God through Jesus Christ."</p>
+                <div class="quote-source">Letter to the Philippians</div>
+            </div>
+            <div class="quote-card">
+                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Clement_of_Rome.jpg/220px-Clement_of_Rome.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>Pope St. Clement I</h3><span>(c. 96 AD)</span></div>
+                </div>
+                <p class="quote-text">"We are not justified by ourselves... but by that faith through which, from the beginning, Almighty God has justified all men."</p>
+                <div class="quote-source">Letter to the Corinthians</div>
+            </div>
+        </section>
+
+        <section id="view-search" class="view-section">
+            <h2 class="topic-title">Search Results</h2>
+            <div id="search-results-list"></div>
+        </section>
+    </div>
+
+    <nav>
+        <div class="nav-scroller">
+            <button onclick="switchTab('eucharist')" id="btn-eucharist"><i class="fa-solid fa-bread-slice"></i>Eucharist</button>
+            <button onclick="switchTab('trinity')" id="btn-trinity"><i class="fa-solid fa-shapes"></i>Trinity</button>
+            <button onclick="switchTab('mary')" id="btn-mary"><i class="fa-solid fa-star"></i>Mary</button>
+            <button onclick="switchTab('authority')" id="btn-authority"><i class="fa-solid fa-scale-balanced"></i>Auth.</button>
+            <button onclick="switchTab('prayer')" id="btn-prayer"><i class="fa-solid fa-hands-praying"></i>Prayer</button>
+            <button onclick="switchTab('lastthings')" id="btn-lastthings"><i class="fa-solid fa-hourglass-half"></i>End Times</button>
+            <button onclick="switchTab('scripture')" id="btn-scripture"><i class="fa-solid fa-scroll"></i>Scripture</button>
+            <button onclick="switchTab('salvation')" id="btn-salvation"><i class="fa-solid fa-heart-circle-check"></i>Salvation</button>
+        </div>
+    </nav>
 
     <script>
-        // Navigation zwischen Seiten
-        function navigateTo(pageName) {
-            document.querySelectorAll('.page-content').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            document.getElementById('page-' + pageName).classList.add('active');
-            document.querySelector(`[data-page="${pageName}"]`).classList.add('active');
-            
-            window.scrollTo(0, 0);
-        }
+        // --- 1. CONFIGURATION ---
+        const tabs = ['home', 'eucharist', 'trinity', 'mary', 'authority', 'prayer', 'lastthings', 'scripture', 'salvation'];
+        let currentTabIndex = 0;
 
-        // Zeige spezifisches Thema
-        function showTopic(topicId) {
-            document.querySelectorAll('.page-content').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            
-            document.getElementById('topic-' + topicId).classList.add('active');
-            window.scrollTo(0, 0);
-        }
+        // --- 2. INITIALIZATION ---
+        window.addEventListener('load', () => {
+            // Splash Logic
+            const splash = document.getElementById('splash-screen');
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                setTimeout(() => splash.style.display = 'none', 800);
+            }, 1200);
 
-        // Navigation Links
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const page = this.getAttribute('data-page');
-                navigateTo(page);
-            });
+            // Theme Logic
+            const savedTheme = localStorage.getItem('theme');
+            if(savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = "fa-solid fa-sun";
+            }
         });
 
-        // Suche für Themen
-        document.getElementById('topic-search').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            document.querySelectorAll('#topics-grid .card').forEach(card => {
-                const topic = card.getAttribute('data-topic');
-                const title = card.querySelector('h3').textContent.toLowerCase();
-                const desc = card.querySelector('p').textContent.toLowerCase();
-                
-                if (topic.includes(searchTerm) || title.includes(searchTerm) || desc.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
+        // --- 3. TAB SWITCHING ---
+        function switchTab(tabId) {
+            if(tabId === 'search') {
+                // Don't update main index for search overlay
+                document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+                document.getElementById('view-search').classList.add('active');
+                return;
+            }
 
-        // Suche für Kirchenväter
-        document.getElementById('father-search').addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            document.querySelectorAll('.father-item').forEach(item => {
-                const name = item.querySelector('h3').textContent.toLowerCase();
-                
-                if (name.includes(searchTerm)) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
+            // Find index in main list
+            const index = tabs.indexOf(tabId);
+            if(index !== -1) currentTabIndex = index;
 
-        // Alphabetischer Filter
-        let currentLetter = 'all';
-        
-        function filterByLetter(letter) {
-            currentLetter = letter;
-            
-            document.querySelectorAll('.alphabet-nav button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            document.querySelectorAll('.father-item').forEach(item => {
-                const itemLetter = item.getAttribute('data-letter');
-                
-                if (letter === 'all' || itemLetter === letter) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
+            // Hide Search
+            document.getElementById('search-container').style.display = 'none';
+
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            // Show target view
+            document.getElementById('view-' + tabId).classList.add('active');
+
+            // Update Buttons
+            document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
+            const btn = document.getElementById('btn-' + tabId);
+            if(btn) {
+                btn.classList.add('active');
+                // Scroll nav to keep button in view
+                btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+
+            // Scroll Top
+            document.getElementById('app-container').scrollTo(0, 0);
+
+            // Toast
+            if(tabId !== 'home') showToast(tabId.charAt(0).toUpperCase() + tabId.slice(1));
         }
 
-        function toggleNav() {
-            const navContent = document.querySelector('.nav-content');
-            const toggles = document.querySelectorAll('.nav-toggle');
-            navContent.classList.toggle('hidden');
+        // --- 4. SWIPE GESTURES (Improved) ---
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        const appContainer = document.getElementById('app-container');
+
+        // Capture touch anywhere in the container
+        appContainer.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, {passive: true});
+
+        appContainer.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
             
-            toggles.forEach(toggle => {
-                if (navContent.classList.contains('hidden')) {
-                    toggle.innerHTML = '&#9650;';
-                    toggle.classList.add('hidden-bg');
+            // Thresholds
+            const minSwipeDistance = 70; 
+            const maxVerticalVariance = 50; // Don't trigger if user is scrolling down
+
+            if (Math.abs(diffX) > minSwipeDistance && Math.abs(diffY) < maxVerticalVariance) {
+                if (diffX < 0) {
+                    // Swipe Left -> Next Tab
+                    if (currentTabIndex < tabs.length - 1) {
+                        switchTab(tabs[currentTabIndex + 1]);
+                    }
                 } else {
-                    toggle.innerHTML = '&#9660;';
-                    toggle.classList.remove('hidden-bg');
+                    // Swipe Right -> Prev Tab
+                    if (currentTabIndex > 0) {
+                        switchTab(tabs[currentTabIndex - 1]);
+                    }
+                }
+            }
+        }
+
+        // --- 5. SEARCH ---
+        function toggleSearch() {
+            const container = document.getElementById('search-container');
+            if(container.style.display === 'block') {
+                container.style.display = 'none';
+                switchTab(tabs[currentTabIndex]); // Go back to current
+            } else {
+                container.style.display = 'block';
+                switchTab('search');
+                document.getElementById('search-input').focus();
+            }
+        }
+
+        function performSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const resultsContainer = document.getElementById('search-results-list');
+            
+            resultsContainer.innerHTML = '';
+            if(query.length < 2) return;
+
+            // Search all cards in hidden sections
+            const allCards = document.querySelectorAll('section:not(#view-search) .quote-card');
+            
+            allCards.forEach(card => {
+                if(card.innerText.toLowerCase().includes(query)) {
+                    const clone = card.cloneNode(true);
+                    // Re-attach share event since onclick is copied but context matters
+                    clone.querySelector('.share-btn').onclick = function() { shareQuote(this); };
+                    resultsContainer.appendChild(clone);
                 }
             });
+
+            if(resultsContainer.innerHTML === '') {
+                resultsContainer.innerHTML = '<p style="text-align:center; color:var(--text-sub); margin-top:2rem;">No matches found.</p>';
+            }
         }
+
+        // --- 6. UTILITIES ---
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            if(body.hasAttribute('data-theme')) {
+                body.removeAttribute('data-theme');
+                icon.className = "fa-solid fa-moon";
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.className = "fa-solid fa-sun";
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.className = "show";
+            t.innerText = msg;
+            setTimeout(() => t.className = "", 2000);
+        }
+
+        async function shareQuote(btn) {
+            const card = btn.closest('.quote-card');
+            const text = card.querySelector('.quote-text').innerText;
+            const saint = card.querySelector('.saint-info h3').innerText;
+            const source = card.querySelector('.quote-source').innerText;
+            const shareData = {
+                title: 'Catholic Wisdom',
+                text: `${text}\n\n- ${saint} (${source})`
+            };
+            try {
+                if(navigator.share) await navigator.share(shareData);
+                else {
+                    navigator.clipboard.writeText(shareData.text);
+                    showToast("Copied to Clipboard");
+                }
+            } catch(e) { console.log(e); }
+        }
+
+        // Auto Hide Nav on Scroll
+        let lastScrollTop = 0;
+        const nav = document.querySelector('nav');
+        appContainer.addEventListener('scroll', () => {
+            const st = appContainer.scrollTop;
+            if(Math.abs(st - lastScrollTop) > 10) {
+                if (st > lastScrollTop && st > 50) nav.classList.add('nav-hidden');
+                else nav.classList.remove('nav-hidden');
+                lastScrollTop = st;
+            }
+        });
     </script>
 </body>
 </html>
