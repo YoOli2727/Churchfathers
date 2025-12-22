@@ -105,7 +105,7 @@
         .saint-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
         .saint-info h3 { font-family: 'Cinzel'; font-size: 1rem; color: var(--crimson); font-weight: 700; }
         .saint-info span { font-size: 0.75rem; color: var(--text-sub); display: block; }
-        .quote-text { font-style: italic; color: var(--text-main); margin-bottom: 1rem; font-size: 1.05rem; }
+        .quote-text { font-style: italic; color: var(--text-main); margin-bottom: 1rem; font-size: 1.05rem; text-align: justify; }
         .quote-source { font-size: 0.75rem; text-align: right; color: var(--text-sub); border-top: 1px solid var(--shadow); padding-top: 8px; font-weight: bold; }
 
         .share-btn, .pdf-btn {
@@ -214,51 +214,92 @@
         <section id="view-eucharist" class="view-section">
             <h2 class="topic-title">Die Eucharistie</h2>
             <div class="quote-card">
+                <button class="pdf-btn" onclick="openPDF(2)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sandro_Botticelli_-_St_Augustine_in_His_Study_-_WGA02748.jpg/250px-Sandro_Botticelli_-_St_Augustine_in_His_Study_-_WGA02748.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>Hl. Augustinus von Hippo</h3><span>(ca. 415 n. Chr.)</span></div>
+                </div>
+                <p class="quote-text">"Dieses Brot, das du auf dem Altar sehen kannst, geheiligt durch das Wort Gottes, ist der Leib Christi. Dieser Kelch, oder vielmehr was der Kelch enthält, geheiligt durch das Wort Gottes, ist das Blut Christi. Es war durch diese Dinge, dass der Herr Christus uns seinen Leib und sein Blut darstellen wollte, das er für unsere Sünden vergossen hat... Siehst du, es wird empfangen, es wird gegessen, es wird verzehrt. Wird der Leib Christi verzehrt, wird die Kirche Christi verzehrt, werden die Glieder Christi verzehrt?"</p>
+                <div class="quote-source">Predigt 227</div>
+                <br>
+                <p class="quote-text">"Was du auf dem Altar sehen kannst, hast du letzte Nacht gesehen; aber was es war, was es bedeutete, welche große Realität es im Sakrament enthielt, hattest du noch nicht gehört. Was du also sehen kannst, ist Brot und ein Kelch; das ist es, was sogar deine Augen dir sagen; aber was dein Glaube zu verstehen bittet, ist Brot der Leib Christi, der Kelch das Blut Christi. Wie kann Brot sein Leib sein? Und der Kelch, oder was der Kelch enthält, wie kann es sein Blut? Der Grund, Brüder und Schwestern, warum diese Dinge Sakramente genannt werden, ist, dass in ihnen das eine gesehen wird, das andere zu verstehen ist. Was gesehen werden kann, hat eine körperliche Erscheinung, was zu verstehen ist, bringt geistliche Frucht. Wenn du also den Leib Christi verstehen willst, höre dem Apostel zu, der den Gläubigen sagt: 'Ihr aber seid der Leib Christi und seine Glieder' (1. Kor 12,27). Wenn ihr also der Leib Christi und seine Glieder seid, ist es das Geheimnis, das euch gemeint ist, das auf den Tisch des Herrn gelegt wurde; was du empfängst, ist das Geheimnis, das dich bedeutet. Es ist auf das, was du bist, dass du mit Amen antwortest, und durch diese Antwort bekennst du deine Zustimmung. Was Du hörst, siehst du, ist 'Der Leib Christi?' und du antwortest 'Amen'. So sei ein Glied des Leibes Christi, damit dieses Amen wahr wird. ... Warum also Brot? ... Als du getauft wurdest, war es, als wärst du in einen Teig gemischt worden. Als du das Feuer des Heiligen Geistes empfangen hast, war es, als wärst du gebacken worden. Sei, was du sehen kannst, und empfange, was du bist. Das hat der Apostel über das Brot gesagt. Er hat bereits klar genug gezeigt, was wir über den Kelch verstehen sollen, auch wenn es nicht gesagt wurde... sie hatten eine Seele und ein Herz in Gott (Apg 4,32); so auch mit dem Wein. Brüder und Schwestern, erinnert euch nur daran, woraus Wein gemacht wird; viele Trauben hängen in einer Traube, aber der Saft der Trauben wird in ein Gefäß zusammengegossen."</p>
+                <div class="quote-source">Predigt 272</div>
+                <br>
+                <p class="quote-text">"'Und wurde in Seinen Eigenen Händen getragen': wie 'in Seinen Eigenen Händen getragen'? Denn als Er Seinen Eigenen Leib und Blut empfahl, nahm Er in Seine Hände, was die Gläubigen kennen; und auf eine Weise trug Er Sich selbst, als Er sprach: 'Dies ist Mein Leib.'"</p>
+                <div class="quote-source">Erklärungen zu den Psalmen, Psalm 37</div>
+            </div>
+            <div class="quote-card">
+                <button class="pdf-btn" onclick="openPDF(6)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Clement_of_Alexandria.jpg/220px-Clement_of_Alexandria.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>Clemens von Alexandria</h3><span>(ca. 200 n. Chr.)</span></div>
+                </div>
+                <p class="quote-text">"Der Logos wird alles für das Kind, Vater und Mutter und Erzieher und Ernährer. 'Esset mein Fleisch', so steht geschrieben, 'und trinkt mein Blut!' Diese für uns geeignete Nahrung spendet der Herr, und Er reicht sein Fleisch dar und vergießt sein Blut; und nichts fehlt den Kindern zum Wachstum."</p>
+                <div class="quote-source">Der Erzieher, Buch 1</div>
+            </div>
+            <div class="quote-card">
                 <button class="pdf-btn" onclick="openPDF(1)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Ignatius_Antioch.jpg/220px-Ignatius_Antioch.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>Hl. Ignatius von Antiochien</h3><span>(ca. 107 n. Chr.)</span></div>
                 </div>
-                <p class="quote-text">"Ich habe keine Lust an vergänglicher Speise... Ich begehre das Brot Gottes, welches das Fleisch Jesu Christi ist... und zu trinken begehre ich Sein Blut, welches die unvergängliche Liebe ist."</p>
-                <div class="quote-source">Brief an die Römer, 7,3</div>
-            </div>
-            <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(2)"><i class="fa-solid fa-file-pdf"></i></button>
-                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
-                <div class="card-header">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/St_John_Chrysostom_icon_full_body.jpg/178px-St_John_Chrysostom_icon_full_body.jpg" class="saint-avatar">
-                    <div class="saint-info"><h3>Hl. Johannes Chrysostomus</h3><span>(ca. 400 n. Chr.)</span></div>
-                </div>
-                <p class="quote-text">"Er gibt Sich selbst euch, nicht nur damit ihr Ihn seht, sondern auch damit Er eure Speise sei... Er hat Sich mit uns vermengt, damit wir eins werden."</p>
-                <div class="quote-source">Homilie 82 über Matthäus</div>
-            </div>
-            <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(3)"><i class="fa-solid fa-file-pdf"></i></button>
-                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
-                <div class="card-header">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Carlo_Crivelli_005.jpg/235px-Carlo_Crivelli_005.jpg" class="saint-avatar">
-                    <div class="saint-info"><h3>Hl. Thomas von Aquin</h3><span>(ca. 1264 n. Chr.)</span></div>
-                </div>
-                <p class="quote-text">"O kostbares und wunderbares Gastmahl! Es ist das Brot, das gegessen, aber nicht verzehrt wird; das von allen gegessen wird, aber ganz bleibt."</p>
-                <div class="quote-source">Liturgie für Fronleichnam</div>
+                <p class="quote-text">"Der Fürst dieser Weltzeit will mich entführen und meinen auf Gott gerichteten Sinn verderben. Keiner nun von euch, die zugegen sind, soll ihm helfen; steht vielmehr zu mir, das heißt zu Gott. Sagt nicht ,Jesus Christus' und verlangt doch nach der Welt. Mißgunst soll nicht bei euch wohnen. Selbst wenn ich persönlich euch auffordere, so gehorcht mir nicht; gehorcht vielmehr dem, was ich euch schreibe. Denn ich schreibe euch als einer, der lebt, sich aber in Liebe nach dem Sterben sehnt. Meine Liebe ist gekreuzigt, und in mir ist kein Feuer, das an der Materie Nahrung sucht, vielmehr ein lebendiges Wasser, das in mir redet und zu mir spricht: Komm her zum Vater! Ich freue mich nicht an vergänglicher Nahrung und den Freuden dieses Lebens. Brot Gottes will ich, das ist das Fleisch Jesu Christi, der aus dem Samen Davids stammt, und zum Trank will ich sein Blut, das ist die unvergängliche Liebe."</p>
+                <div class="quote-source">Brief an die Römer, 7</div>
+                <br>
+                <p class="quote-text">"Lasse sich niemand täuschen! Auch die himmlischen Mächte, die Herrlichkeit der Engel und die sichtbaren wie unsichtbaren Herrscher - wenn sie nicht an das Blut Christi glauben, kommt auch über sie das Gericht. Denn das Ganze ist Glaube und Liebe, die von nichts übertroffen werden. Aber auf jene achtet, die im Blick auf die uns zugekommene Gnade Jesu Christi irriger Ansicht sind, wie sie sich im Gegensatz befinden zum Sinne Gottes. Die Liebe bekümmert sie nicht, nicht die Witwe noch die Waise, nicht der Bedrückte, nicht der Gebundene oder Freigelassene, nicht der Hungernde oder der Dürstende."</p>
+                <div class="quote-source">Brief an die Smyrnäer, 6</div>
+                <br>
+                <p class="quote-text">"Von Eucharistie und Gebet halten sie sich fern, weil sie nicht bekennen, dass die Eucharistie das Fleisch unseres Erlösers Jesus Christus ist, das für unsere Sünden gelitten, das der Vater in seiner Güte auferweckt hat. Die sich nun der Gabe Gottes widersetzen, sterben an ihrem Streiten. Es wäre aber gut für sie, Liebe zu üben, damit auch sie auferstehen. So gehört es sich nun, sich von solchen Menschen fernzuhalten und weder privat noch öffentlich von ihnen zu sprechen, sich vielmehr an die Propheten zu halten, besonders aber an das Evangelium, in dem das Leiden uns kundgetan und die Auferstehung vollendet worden ist. Die Spaltungen aber flieht als den Anfang der Übel!"</p>
+                <div class="quote-source">Brief an die Smyrnäer, 7</div>
+                <br>
+                <p class="quote-text">"Folgt alle dem Bischof, wie Jesus Christus dem Vater, und dem Presbyterium wie den Aposteln; die Diakone aber achtet wie Gottes Gebot. Keiner soll etwas von kirchlichen Dingen ohne den Bischof tun. Jene Eucharistie soll als zuverlässig gelten, die unter dem Bischof oder, wem er es anvertraut, stattfindet. Wo der Bischof erscheint, da soll auch die Gemeinde sein, wie da, wo Christus Jesus sich befindet, auch die allgemeine Kirche ist. Es ist nicht erlaubt, ohne den Bischof zu taufen oder das Liebesmahl zu halten; was jener aber geprüft hat, dies ist Gott wohlgefällig, damit alles, was ihr tut, sicher und zuverlässig sei."</p>
+                <div class="quote-source">Brief an die Smyrnäer, 8</div>
             </div>
             <div class="quote-card">
                 <button class="pdf-btn" onclick="openPDF(4)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Saint_Irenaeus.jpg/220px-Saint_Irenaeus.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>Hl. Irenäus von Lyon</h3><span>(ca. 180 n. Chr.)</span></div>
+                </div>
+                <p class="quote-text">"Als er deshalb die Gabe des Brotes nahm, sagte er Dank und sprach: 'Das ist mein Leib'. Und ähnlich bekannte er den Kelch, der aus dieser irdischen Schöpfung stammt, als sein Blut und machte ihn zur Opfergabe des Neuen Bundes, sodass ihn die Kirche, wie sie ihn von den Aposteln empfangen hat, auf der ganzen Welt Gott darbringt, ihm, der uns ernährt, als die Erstlinge seiner Gaben im Neuen Bunde. Wie hat dann der Herr, wenn er von einem anderen Vater als die Schöpfung stammt, mit Recht jenes Brot, das zu dieser Schöpfung gehört, als seinen Leib bezeichnet und den Inhalt des Kelches als sein Blut?"</p>
+                <div class="quote-source">Gegen die Häresien, Buch 4</div>
+                <br>
+                <p class="quote-text">"Täricht in jeder Hinsicht sind die, welche die gesamte Anordnung Gottes verachten, die Heiligung des Fleisches leugnen und seine Wiedergeburt verwerfen, indem sie behaupten, dass es der Unvergänglichkeit nicht fähig sei. Wird aber dies nicht erlöst, dann hat uns der Herr auch nicht mit seinem Blute erlöst, noch ist der eucharistische Kelch die Teilnahme an seinem Blute, das Brot, das wir brechen, die Teilnahme an seinem Leibe? Blut stammt nämlich nur von Fleisch und Adern und der übrigen menschlichen Substanz, die das Wort Gottes in Wahrheit angenommen hat. Mit seinem Blute erlöste er uns, wie auch der Apostel sagt: 'In ihm haben wir die Erlösung, durch sein Blut Nachlass der Sünden'. Und da wir seine Glieder sind, werden wir durch seine Schöpfung ernährt werden, und Er selbst gewährt uns seine Schöpfung: lässt seine Sonne aufgehen und regnen, sagt, dass Er uns den Kelch von seiner Schöpfung als sein eigenes Blut reiche, mit dem Er unser Blut erquickt, und versichert, dass das Brot seiner Schöpfung sein eigener Leib ist, mit dem Er unsere Leiber erhebt."</p>
+                <div class="quote-source">Gegen die Häresien, Buch 5, Kapitel 2</div>
+                <br>
+                <p class="quote-text">"Wenn nun also der gemischte Kelch und das zubereitete Brot das Wort Gottes aufnimmt und die Eucharistie zum Leibe Christi wird, woraus die Substanz unseres Fleisches Erhebung und Bestand erhält, wie können sie dann sagen, das Fleisch könne nicht aufnehmen die Gabe Gottes, die in dem ewigen Leben besteht, da es doch von dem Blute und Fleische des Herrn genährt wird und sein Glied ist? So sagt auch der selige Apostel Paulus in dem Briefe an die Epheser: 'Wir sind Glieder seines Leibes, aus seinem Fleisch und seinem Gebeine'. Das sagt er nicht von einem geistigen und unsichtbaren Leibe — denn 'ein Geist hat weder Bein noch Knochen' — sondern von einem wahrhaft menschlichen Organismus, der aus Fleisch, Nerven und Knochen besteht, der von dem Kelch seines Blutes ernährt und von dem Brot seines Leibes erhoben wird. Und wie das Holz der Weinrebe, in der Erde wurzelnd, zu seiner Zeit Frucht hervorbringt, und wie das Weizenkorn in die Erde fällt, sich auflöst und vielfältig aufersteht durch den Geist Gottes, der alles umfasst — und alsdann kommt dieses weisheitsvoll in den Gebrauch der Menschen, nimmt auf das Wort Gottes und wird zur Eucharistie, welche der Leib und das Blut Christi ist — so werden auch unsere Körper aus ihr genährt, und wenn sie in der Erde geborgen und dort aufgelöst sind, werden sie zu ihrer Zeit auferstehen, wenn das Wort Gottes ihnen verleiht, aufzuerstehen für die Herrlichkeit Gottes des Vaters. Er umgibt dieses Sterbliche mit Unsterblichkeit, schenkt dem Vergänglichen aus Gnade seine Unvergänglichkeit, da die Kraft Gottes in der Schwäche vollkommen wird, damit wir nicht in Undankbarkeit gegen Gott uns jemals hochmütig aufblähen, gleich als ob wir das Leben aus uns selbst hätten. So sollte die Erfahrung uns lehren, dass wir aus seiner Größe, nicht kraft unserer Natur ewig fortdauern, so sollten wir Gottes Herrlichkeit, wie sie ist, uns vor Augen halten und unsere eigene Schwäche nicht verkennen. Sollten wissen, was Gott vermag, und was der Mensch Gutes empfängt, sollten niemals irregchen in der wahren Erkenntnis der Wirklichkeit, d.h. des Verhältnisses zwischen Gott und den Menschen."</p>
+                <div class="quote-source">Gegen die Häresien, Buch 5, Kapitel 3</div>
+            </div>
+            <div class="quote-card">
+                <button class="pdf-btn" onclick="openPDF(3)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Saint_Justin_Martyr_-_Theophanes_the_Cretan.jpg/220px-Saint_Justin_Martyr_-_Theophanes_the_Cretan.jpg" class="saint-avatar">
                     <div class="saint-info"><h3>Hl. Justin der Märtyrer</h3><span>(ca. 155 n. Chr.)</span></div>
                 </div>
-                <p class="quote-text">"Denn nicht wie gewöhnliches Brot und gewöhnlichen Trank empfangen wir diese; sondern... wir haben gelehrt worden, dass die Speise, die durch das Gebet Seines Wortes gesegnet wird... das Fleisch und Blut dessen Jesus ist, der Fleisch geworden ist."</p>
-                <div class="quote-source">Erste Apologie, Kap. 66</div>
+                <p class="quote-text">"Diese Nahrung heißt bei uns Eucharistie. Niemand darf daran teilnehmen, als wer unsere Lehren für wahr hält, das Bad zur Nachlassung der Sünden und zur Wiedergeburt empfangen hat und nach den Weisungen Christi lebt. Denn nicht als gemeines Brot und als gemeinen Trank nehmen wir sie; sondern wie Jesus Christus, unser Erlöser, als er durch Gottes Logos Fleisch wurde, Fleisch und Blut um unseres Heiles willen angenommen hat, so sind wir belehrt worden, dass die durch ein Gebet um den Logos, der von ihm ausgeht, unter Danksagung geweihte Nahrung, mit der unser Fleisch und Blut durch Umwandlung genährt wird, Fleisch und Blut jenes fleischgewordenen Jesus sei. Denn die Apostel haben in den von ihnen stammenden Denkweisen, welche Evangelien heißen, überliefert, es sei ihnen folgende Anweisung gegeben worden: Jesus habe Brot genommen, Dank gesagt und gesprochen: 'Das tut zu meinem Gedächtnis, das ist mein Leib', und ebenso: habe er den Becher genommen, Dank gesagt und gesprochen: 'Dieses ist mein Blut', und Er habe nur ihnen davon mitgeteilt. Auch diesen Brauch haben die bösen Dämonen in den Mysterien nachgeahmt und Anleitung dazu gegeben. Dass Brot und ein Becher Wassers bei den Weihen eines neuen Jüngers unter Hersagen bestimmter Spriche hingestellt werden, das wollt ihr oder könnt ihr erfahren."</p>
+                <div class="quote-source">Erste Apologie, Kapitel 66</div>
+            </div>
+            <div class="quote-card">
+                <button class="pdf-btn" onclick="openPDF(5)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
+                <div class="card-header">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tertullianus.jpg/220px-Tertullianus.jpg" class="saint-avatar">
+                    <div class="saint-info"><h3>Tertullian</h3><span>(160-220 n. Chr.)</span></div>
+                </div>
+                <p class="quote-text">"Der Leib genießt das Fleisch und das Blut Christi, damit die Seele aus Gott genährt werde."</p>
+                <div class="quote-source">Über die Auferstehung des Fleisches, Kapitel 8</div>
             </div>
         </section>
 
         <section id="view-trinity" class="view-section">
             <h2 class="topic-title">Die Heilige Dreifaltigkeit</h2>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(5)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(7)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Gregorius_Theologus.jpg/220px-Gregorius_Theologus.jpg" class="saint-avatar">
@@ -268,7 +309,7 @@
                 <div class="quote-source">Rede 40</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(6)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(8)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Sandro_Botticelli_-_St_Augustine_in_His_Study_-_WGA02748.jpg/250px-Sandro_Botticelli_-_St_Augustine_in_His_Study_-_WGA02748.jpg" class="saint-avatar">
@@ -278,7 +319,7 @@
                 <div class="quote-source">De Trinitate, Buch VIII</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(7)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(9)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Athanasius_s.jpg/220px-Athanasius_s.jpg" class="saint-avatar">
@@ -292,7 +333,7 @@
         <section id="view-mary" class="view-section">
             <h2 class="topic-title">Die Gottesgebärerin (Theotokos)</h2>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(8)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(10)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Theotokos_Vladimiskaya.jpg/220px-Theotokos_Vladimiskaya.jpg" class="saint-avatar">
@@ -302,7 +343,7 @@
                 <div class="quote-source">Brief 1 an die Mönche von Ägypten</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(9)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(11)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Saint_Irenaeus.jpg/220px-Saint_Irenaeus.jpg" class="saint-avatar">
@@ -312,7 +353,7 @@
                 <div class="quote-source">Gegen die Häresien, Buch III</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(10)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(12)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ephrem_the_Syrian_contemporary_icon.jpg/220px-Ephrem_the_Syrian_contemporary_icon.jpg" class="saint-avatar">
@@ -326,7 +367,7 @@
         <section id="view-authority" class="view-section">
             <h2 class="topic-title">Kirchliche Autorität</h2>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(11)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(13)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Saint_Irenaeus.jpg/220px-Saint_Irenaeus.jpg" class="saint-avatar">
@@ -336,7 +377,7 @@
                 <div class="quote-source">Gegen die Häresien, Buch III</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(12)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(14)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Cyprianus_Carthaginensis.jpg/220px-Cyprianus_Carthaginensis.jpg" class="saint-avatar">
@@ -346,7 +387,7 @@
                 <div class="quote-source">Über die Einheit der Kirche</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(13)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(15)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Saint_Jerome_Caravaggio_%28Monserrat%29.jpg/220px-Saint_Jerome_Caravaggio_%28Monserrat%29.jpg" class="saint-avatar">
@@ -360,7 +401,7 @@
         <section id="view-prayer" class="view-section">
             <h2 class="topic-title">Gebet & Leben</h2>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(14)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(16)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Th%C3%A9r%C3%A8se_de_Lisieux_02.jpg/220px-Th%C3%A9r%C3%A8se_de_Lisieux_02.jpg" class="saint-avatar">
@@ -370,7 +411,7 @@
                 <div class="quote-source">Autobiographie</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(15)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(17)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Teresa_of_Avila_by_Peter_Paul_Rubens.jpg/220px-Teresa_of_Avila_by_Peter_Paul_Rubens.jpg" class="saint-avatar">
@@ -380,7 +421,7 @@
                 <div class="quote-source">Buch ihres Lebens</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(16)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(18)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Fra_Angelico_003.jpg/220px-Fra_Angelico_003.jpg" class="saint-avatar">
@@ -394,7 +435,7 @@
         <section id="view-lastthings" class="view-section">
             <h2 class="topic-title">Die vier letzten Dinge</h2>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(17)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(19)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Alphonsus_Liguori.jpg/220px-Alphonsus_Liguori.jpg" class="saint-avatar">
@@ -404,7 +445,7 @@
                 <div class="quote-source">Vorbereitung auf den Tod</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(18)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(20)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Saint_Augustine_by_Philippe_de_Champaigne.jpg/220px-Saint_Augustine_by_Philippe_de_Champaigne.jpg" class="saint-avatar">
@@ -414,7 +455,7 @@
                 <div class="quote-source">Bekenntnisse, Buch I</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(19)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(21)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Mosaico_di_San_Giovanni_Crisostomo_%28Santa_Sofia_a_Costantinopoli%29.jpg/220px-Mosaico_di_San_Giovanni_Crisostomo_%28Santa_Sofia_a_Costantinopoli%29.jpg" class="saint-avatar">
@@ -428,7 +469,7 @@
         <section id="view-scripture" class="view-section">
             <h2 class="topic-title">Schrift & Tradition</h2>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(20)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(22)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Basilius_Magnus.jpg/220px-Basilius_Magnus.jpg" class="saint-avatar">
@@ -438,7 +479,7 @@
                 <div class="quote-source">Über den Heiligen Geist, 27</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(21)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(23)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Vincent_of_Lerins.jpg/220px-Vincent_of_Lerins.jpg" class="saint-avatar">
@@ -448,7 +489,7 @@
                 <div class="quote-source">Commonitorium</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(22)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(24)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Athanasius_s.jpg/220px-Athanasius_s.jpg" class="saint-avatar">
@@ -462,7 +503,7 @@
         <section id="view-salvation" class="view-section">
             <h2 class="topic-title">Erlösung & Gnade</h2>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(23)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(25)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Saint_Augustine_by_Philippe_de_Champaigne.jpg/220px-Saint_Augustine_by_Philippe_de_Champaigne.jpg" class="saint-avatar">
@@ -472,7 +513,7 @@
                 <div class="quote-source">Predigt 169</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(24)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(26)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Polycarp.jpg/220px-Polycarp.jpg" class="saint-avatar">
@@ -482,7 +523,7 @@
                 <div class="quote-source">Brief an die Philipper</div>
             </div>
             <div class="quote-card">
-                <button class="pdf-btn" onclick="openPDF(25)"><i class="fa-solid fa-file-pdf"></i></button>
+                <button class="pdf-btn" onclick="openPDF(27)"><i class="fa-solid fa-file-pdf"></i></button>
                 <button class="share-btn" onclick="shareQuote(this)"><i class="fa-solid fa-share-nodes"></i></button>
                 <div class="card-header">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Clement_of_Rome.jpg/220px-Clement_of_Rome.jpg" class="saint-avatar">
@@ -590,7 +631,7 @@
         let touchEndY = 0;
         const appContainer = document.getElementById('app-container');
 
-        // Capture touch anywhere in the container
+        // Capture touch anywhere in container
         appContainer.addEventListener('touchstart', e => {
             touchStartX = e.changedTouches[0].screenX;
             touchStartY = e.changedTouches[0].screenY;
@@ -709,7 +750,7 @@
         }
 
         function openPDF(pdfNumber) {
-            // Open the PDF in a new window/tab
+            // Open PDF in a new window/tab
             window.open(`pdfs/pdf${pdfNumber}.pdf`, '_blank');
         }
 
